@@ -1,55 +1,39 @@
-%% Copyright (C) 2013  Patrik Sandahl
-%%
-%% This program is free software: you can redistribute it and/or modify
-%% it under the terms of the GNU General Public License as published by
-%% the Free Software Foundation, either version 3 of the License, or
-%% (at your option) any later version.
-%%
-%% This program is distributed in the hope that it will be useful,
-%% but WITHOUT ANY WARRANTY; without even the implied warranty of
-%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-%% GNU General Public License for more details.
-%%
-%% You should have received a copy of the GNU General Public License
-%% along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+%% Module and function names may have been converted to lower case
 -module(dictionary).
 
-%% API to start and stop the C++ communicator itself
--export([start/0, stop/0]).
+%% API to start and stop the C++ communicator
+-export([start/0,stop/0]).
 
-%% The API for the system under test C++ module
--export([create/0, size/1, reference/2, unreference/2, count/2]).
+%% API for the system under test
+-export([create/0,size/1,reference/2,unreference/2,count/2]).
 
-%% Define the path to the external program which will wrap the system
-%% under test C++ module
+%% Handy macros for C++ communication
 -define(ExtProg, "./TestMain").
 -define(CppComm, cpp_comm).
 
+%% Functions for start and stop
 start() ->
     ?CppComm:start_link(?ExtProg).
-
 stop() ->
     ?CppComm:stop().
 
-%% Create a new instance of the dictionary
+%% StaticDecl "Dictionary" "create" [Ptr (UserDef "Dictionary")]
 create() ->
     ?CppComm:call({create}).
 
-%% Ask a Dictionary object about it's size
-size(Object) ->
-    ?CppComm:call({size, Object}).
+%% MethodDecl "size" [Ptr (UserDef "Dictionary"),Value Integer]
+size(Arg1) ->
+    ?CppComm:call({size,Arg1}).
 
-%% Register a word for reference in the dictionary. Update the
-%% reference count if already registered
-reference(Object, Word) ->
-    ?CppComm:call({reference, Object, list_to_binary(Word)}).
+%% MethodDecl "reference" [Ptr (UserDef "Dictionary"),Value String,Value Void]
+reference(Arg1,Arg2) ->
+    ?CppComm:call({reference,Arg1,list_to_binary(Arg2)}).
 
-%% Unreference a word in the dictionary. If the reference count
-%% reaches zero the work shall be removed
-unreference(Object, Word) ->
-    ?CppComm:call({unreference, Object, list_to_binary(Word)}).
+%% MethodDecl "unreference" [Ptr (UserDef "Dictionary"),Value String,Value Void]
+unreference(Arg1,Arg2) ->
+    ?CppComm:call({unreference,Arg1,list_to_binary(Arg2)}).
 
-%% Get the reference count for a word in the dictionary
-count(Object, Word) ->
-    ?CppComm:call({count, Object, list_to_binary(Word)}).
+%% MethodDecl "count" [Ptr (UserDef "Dictionary"),Value String,Value Integer]
+count(Arg1,Arg2) ->
+    ?CppComm:call({count,Arg1,list_to_binary(Arg2)}).
+
