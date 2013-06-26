@@ -19,7 +19,7 @@
 -export([start/0, stop/0]).
 
 %% The API for the system under test C++ module
--export([new/0, size/1, reference/2, unreference/2, count/2]).
+-export([create/0, size/1, reference/2, unreference/2, count/2]).
 
 %% Define the path to the external program which will wrap the system
 %% under test C++ module
@@ -32,10 +32,9 @@ start() ->
 stop() ->
     ?CppComm:stop().
 
-%% Execute the 'new' operator for the Dictionary class and return the
-%% object's pointer
-new() ->
-    ?CppComm:call({new}).
+%% Create a new instance of the dictionary
+create() ->
+    ?CppComm:call({create}).
 
 %% Ask a Dictionary object about it's size
 size(Object) ->

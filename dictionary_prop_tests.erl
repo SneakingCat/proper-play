@@ -53,7 +53,7 @@ initial_state() ->
 
 %% For the fresh state force a call to create the object instance
 command(#state{object=undefined}) ->
-    {call, ?SUT, new, []};
+    {call, ?SUT, create, []};
 command(#state{object=Object}) ->
     oneof([{call, ?SUT, size, [Object]},
 	   {call, ?SUT, reference, [Object, word()]},
@@ -73,9 +73,9 @@ precondition(_State, _Cmd) ->
     true.
 
 %%==============================================================================
-%% next_state for new
+%% next_state for create
 %%==============================================================================
-next_state(State, V, {call, ?SUT, new, []}) ->
+next_state(State, V, {call, ?SUT, create, []}) ->
     %% Update the state with the value for the object pointer
     State#state{object=V};
 
@@ -102,9 +102,9 @@ next_state(State, _V, _Cmd) ->
     State.
 
 %%==============================================================================
-%% postcondition for new
+%% postcondition for create
 %%==============================================================================
-postcondition(_State, {call, ?SUT, new, []}, Result) ->
+postcondition(_State, {call, ?SUT, create, []}, Result) ->
     %% Just check that we got an integer back
     is_integer(Result);
 

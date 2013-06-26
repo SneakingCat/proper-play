@@ -25,6 +25,10 @@
 // missed when using traditional static testing strategies
 class Dictionary {
 public:
+  static Dictionary *create() {
+    return new Dictionary;
+  }
+
   Dictionary() :
     mDictMap() {
   }

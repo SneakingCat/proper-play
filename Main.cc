@@ -52,9 +52,9 @@ int main() {
     ETERM *func  = erl_element(Func, tuple);
     assert(ERL_IS_ATOM(func));
 
-    if (ErlComm::atomEqualsTo(func, "new")) {
-      // Function 'new' is requested. No arguments
-      Dictionary *dictionary = new Dictionary;
+    if (ErlComm::atomEqualsTo(func, "create")) {
+      // Static function 'create' is requested. No arguments
+      Dictionary *dictionary = Dictionary::create();
 
       ETERM *object = 
 	erl_mk_ulonglong(reinterpret_cast<unsigned long long>(dictionary));
