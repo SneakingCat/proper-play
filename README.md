@@ -5,6 +5,8 @@ The proper-play package is a small demo in how to test a C++ class
 from Erlang by using the property testing library PropEr (see
 http://proper.softlab.ntua.gr/).
 
+NB: Parts of the code is generated, and maybe not that beautiful
+
 Configuration
 -------------
 
@@ -38,3 +40,12 @@ using:
 * BUGS=1 make - Activate "bug 1"
 * BUGS=2 make - Activate "bug 2"
 * BUGS=3 make - Activate both bugs
+
+Using code generation of glue code
+----------------------------------
+
+It it possible to generate the C++ and Erlang glue code yourselves. To
+do so clone and build the proper-play-gen toy compiler:
+https://github.com/SneakingCat/proper-play-gen
+
+Then proper-play-gen -f Dictionary.mod

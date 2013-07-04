@@ -1,7 +1,7 @@
 CC = g++
 ERL = erl
 ERLC = erlc -I ${ERL_LIBS}
-CCFLAGS = -Wall -Werror -I ${ERL_INTERFACE}/include -L${ERL_INTERFACE}/lib
+CCFLAGS = -Wall -Werror -I ${ERL_INTERFACE}/include -I . -L${ERL_INTERFACE}/lib
 LDFLAGS = -lerl_interface -lei -lpthread
 OBJS = Main.o ErlComm.o 
 BEAMS = dictionary_prop_tests.beam dictionary.beam cpp_comm.beam
